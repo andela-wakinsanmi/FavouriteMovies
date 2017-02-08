@@ -36,7 +36,7 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
         .enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if(response != null && response.body() != null) {
+                if(response.isSuccessful()) {
                     ApiResponse apiResponse = response.body();
                     view.displayDataInView(apiResponse.results);
                 } else {
