@@ -8,7 +8,7 @@ public interface MainActivityContract {
 
     interface Presenter {
 
-        void setView();
+        void setView(MainActivityContract.View view);
         void fetchData();
     }
 }
