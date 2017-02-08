@@ -1,6 +1,9 @@
 package com.spykins.assessment.MainScreen.dagger;
 
 import com.spykins.assessment.MainScreen.http.DataFetcher;
+import com.spykins.assessment.MainScreen.mainView.contract.MainActivityContract;
+import com.spykins.assessment.MainScreen.mainView.presenter.MainActivityPresenter;
+import com.spykins.assessment.MainScreen.mainView.view.MainActivity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,5 +27,9 @@ public class AppModule {
                 .build();
     }
 
+    @Provides
+    public MainActivityContract.Presenter provideMainActivityPresenter(DataFetcher dataFetcher) {
+        return new MainActivityPresenter(dataFetcher);
+    }
 
 }
