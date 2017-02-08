@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
+import com.spykins.assessment.MainScreen.MovieApp;
 import com.spykins.assessment.MainScreen.detailScreen.view.DetailActivity;
-import com.spykins.assessment.MainScreen.http.FavMovie;
+import com.spykins.assessment.MainScreen.model.FavMovie;
 import com.spykins.assessment.MainScreen.mainView.adapter.RecyclerViewAdapter;
 import com.spykins.assessment.MainScreen.mainView.contract.MainActivityContract;
 import com.spykins.assessment.R;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ((MovieApp)getApplication()).getAppComponent().inject(this);
         setUpRecyclerView();
         presenter.setView(this);
         presenter.fetchData();
@@ -54,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         //intent.putExtra()
         startActivity(intent);
         //Go to detail view
+    }
 
+    @Override
+    public void displayError(String s) {
+        Toast.makeText(this,"Problem occured while fetching data",Toast.LENGTH_LONG).show();
     }
 }
