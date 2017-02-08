@@ -1,14 +1,10 @@
 package com.spykins.assessment.MainScreen.mainView.presenter;
 
 
-import android.util.Log;
-
-import com.spykins.assessment.MainScreen.MovieApp;
 import com.spykins.assessment.MainScreen.http.DataFetcher;
-import com.spykins.assessment.MainScreen.http.FavMovie;
+import com.spykins.assessment.MainScreen.model.FavMovie;
 import com.spykins.assessment.MainScreen.mainView.contract.MainActivityContract;
-
-import java.util.List;
+import com.spykins.assessment.MainScreen.model.ApiResponse;
 
 import javax.inject.Inject;
 
@@ -37,18 +33,21 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     @Override
     public void fetchData() {
         dataFetcher.groupList(api_key,language, sort_by)
-        .enqueue(new Callback<List<FavMovie>>() {
+        .enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<List<FavMovie>> call, Response<List<FavMovie>> response) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if(response != null && response.body() != null) {
+                    ApiResponse apiResponse = response.body();
+                    view.displayDataInView(apiResponse.results);
+                } else {
+                    view.displayError("Problem occured from Api");
+                }
 
-                List<FavMovie> list = response.body();
-                view.displayDataInView(response.body());
-                Log.d("waleola", list.get(0).originalTitle);
             }
 
             @Override
-            public void onFailure(Call<List<FavMovie>> call, Throwable t) {
-
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                view.displayError("Problem occured from Api");
             }
         });
     }

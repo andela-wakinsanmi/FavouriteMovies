@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.spykins.assessment.MainScreen.http.FavMovie;
+import com.spykins.assessment.MainScreen.model.FavMovie;
 import com.spykins.assessment.MainScreen.mainView.contract.MainActivityContract;
 import com.spykins.assessment.R;
 
@@ -38,10 +38,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MovieViewHolder holder, final int position) {
         LinearLayout root = holder.root;
+        final FavMovie favMovie = favMovies.get(position);
+
+        if(favMovie != null) {
+            holder.titleTextView.setText(favMovie.title);
+        }
+
+
         root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.onRecyclerItemClicked(favMovies.get(position));
+                view.onRecyclerItemClicked(favMovie);
             }
         });
 
@@ -54,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return 0;
+        return favMovies.size();
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
