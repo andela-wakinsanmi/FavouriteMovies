@@ -53,8 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     @Override
     public void navigateToDetailView(FavMovie movie) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        //intent.putExtra()
+        Intent intent = DetailActivity.newInstance(MainActivity.this, movie);
         startActivity(intent);
         //Go to detail view
     }
