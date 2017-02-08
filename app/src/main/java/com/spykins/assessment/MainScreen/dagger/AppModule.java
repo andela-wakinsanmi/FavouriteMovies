@@ -19,6 +19,7 @@ public class AppModule {
         return retrofit.create(DataFetcher.class);
     }
 
+
     @Provides
     public Retrofit provideRetrofit() {
         return new Retrofit.Builder()

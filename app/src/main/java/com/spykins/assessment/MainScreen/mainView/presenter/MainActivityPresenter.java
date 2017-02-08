@@ -3,6 +3,7 @@ package com.spykins.assessment.MainScreen.mainView.presenter;
 
 import android.util.Log;
 
+import com.spykins.assessment.MainScreen.MovieApp;
 import com.spykins.assessment.MainScreen.http.DataFetcher;
 import com.spykins.assessment.MainScreen.http.FavMovie;
 import com.spykins.assessment.MainScreen.mainView.contract.MainActivityContract;
@@ -39,7 +40,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
         .enqueue(new Callback<List<FavMovie>>() {
             @Override
             public void onResponse(Call<List<FavMovie>> call, Response<List<FavMovie>> response) {
-                Log.d("waleola", ((FavMovie)response.body()).originalTitle);
+
+                List<FavMovie> list = response.body();
+                view.displayDataInView(response.body());
+                Log.d("waleola", list.get(0).originalTitle);
             }
 
             @Override
@@ -47,5 +51,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
 
             }
         });
+    }
+
+    @Override
+    public void recyclerItemIsClicked(FavMovie movie) {
+        view.navigateToDetailView(movie);
     }
 }
