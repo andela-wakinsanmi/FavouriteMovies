@@ -2,6 +2,7 @@ package com.spykins.assessment.MainScreen.mainView.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.spykins.assessment.MainScreen.model.FavMovie;
 import com.spykins.assessment.MainScreen.mainView.contract.MainActivityContract;
 import com.spykins.assessment.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<FavMovie> favMovies;
     private MainActivityContract.View view;
     private LayoutInflater inflater;
+    private String baseUrl = "https://image.tmdb.org/t/p/w500/";
 
     public RecyclerViewAdapter(MainActivityContract.View view) {
         favMovies = new ArrayList<>();
@@ -42,6 +45,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         if(favMovie != null) {
             holder.titleTextView.setText(favMovie.title);
+           // int pictureDimens = (Context)view).getResources().getDimension(R.dimen.tutorial_cross_marginTop);
+            if(favMovie.posterPath != null && !favMovie.posterPath.isEmpty()) {
+                Log.d("wale", ""+ baseUrl + favMovie.posterPath);
+                Picasso.with((Context)view)
+                        .load(baseUrl + favMovie.posterPath)
+                        .resize(50, 50)
+                        .centerCrop()
+                        .into(holder.posterImageView);
+            }
         }
 
 
