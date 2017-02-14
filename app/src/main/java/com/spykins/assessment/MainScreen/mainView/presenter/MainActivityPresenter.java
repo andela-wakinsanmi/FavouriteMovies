@@ -1,6 +1,7 @@
 package com.spykins.assessment.MainScreen.mainView.presenter;
 
 
+import com.spykins.assessment.MainScreen.http.ApiConstants;
 import com.spykins.assessment.MainScreen.http.DataFetcher;
 import com.spykins.assessment.MainScreen.model.FavMovie;
 import com.spykins.assessment.MainScreen.mainView.contract.MainActivityContract;
@@ -14,9 +15,6 @@ import retrofit2.Response;
 
 
 public class MainActivityPresenter implements MainActivityContract.Presenter {
-    private String api_key= "9a928f01255bbe816cdaa0c5473b8c62";
-    private String language = "en-US";
-    private String sort_by = "popularity.desc";
 
     private MainActivityContract.View view;
     private DataFetcher dataFetcher;
@@ -32,7 +30,7 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
 
     @Override
     public void fetchData() {
-        dataFetcher.groupList(api_key,language, sort_by)
+        dataFetcher.groupList(ApiConstants.API_KEY,ApiConstants.LANGUAGE, ApiConstants.SORT_BY)
         .enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
